@@ -60,6 +60,11 @@ jobs:
     needs: ['Docker-image']
     runs-on: ubuntu-latest
     steps:
+      - name: Download Code
+        uses: actions/download-artifact@v2
+        with:
+          name: build-code
+          path: .
       - name: Test Component
         run: bash ci/component-test.sh
 
