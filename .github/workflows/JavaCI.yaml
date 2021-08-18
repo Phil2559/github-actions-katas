@@ -59,7 +59,6 @@ jobs:
   Component-test:
     needs: ['Docker-image']
     runs-on: ubuntu-latest
-    container: phil2559/micronaut-app:latest
     steps:
       - name: Test Component
         run: bash ci/component-test.sh
