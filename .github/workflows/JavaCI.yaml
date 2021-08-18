@@ -1,0 +1,43 @@
+name: hello-world
+on: push
+jobs:
+  Clone-down:
+    runs-on: ubuntu-latest
+    container: gradle:6-jdk11
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Upload Repo (Code)
+        uses: actions/upload-artifact@v2
+        with:
+          name: code
+          path: .
+  Build:
+    needs: ['Clone-down']
+    runs-on: ubuntu-latest
+    container: gradle:6-jdk11
+    steps:
+      - name: Download Code
+        uses: actions/download-artifact@v2
+        with:
+          name: code
+          path: .
+      - name:  Build app
+        run: bash ci/build-app.sh
+      - name: Upload Builded App
+        uses: actions/upload-artifact@v2
+          with:
+            name: code
+            path: .
+  Test:
+    needs: ['Clone-down']
+    runs-on: ubuntu-latest
+    container: gradle:6-jdk11
+    steps:
+      - name: Download Code
+        uses: actions/download-artifact@v2
+        with:
+          name: code
+          path: .
+      - name: Test
+        run: ci/unit-test-app.sh
