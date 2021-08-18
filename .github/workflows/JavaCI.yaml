@@ -56,6 +56,13 @@ jobs:
       - run: export GIT_COMMIT="GA-$GITHUB_SHA"
       - run: bash ci/build-docker.sh
       - run: bash ci/push-docker.sh
+  Component-test:
+    needs: ['Docker-image']
+    runs-on: ubuntu-latest
+    container: phil2559/micronaut-app:latest
+    steps:
+      - name: Test Component
+        run: bash ci/component-test.sh
 
 
 
