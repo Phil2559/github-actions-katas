@@ -65,6 +65,7 @@ jobs:
         with:
           name: build-code
           path: .
+      - run: export GIT_COMMIT="GA-$GITHUB_SHA"
       - name: Test Component
         run: bash ci/component-test.sh
 
